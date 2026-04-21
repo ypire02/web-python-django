@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ libro.titulo }}{% endblock %}
+
+{% block contenido %}
+
+<div class="d-flex align-items-center mb-4">
+    <a href="{% url 'libros_lista' %}" class="btn btn-outline-secondary btn-sm me-3">
+        <i class="bi bi-arrow-left"></i>
+    </a>
+    <h2 class="fw-bold mb-0"><i class="bi bi-book me-2 text-secondary"></i>{{ libro.titulo }}</h2>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card text-center p-4">
+            <i class="bi bi-book display-1 text-secondary opacity-40 mb-3"></i>
+            <h5 class="fw-bold">{{ libro.titulo }}</h5>
+            <p class="text-muted mb-1">
+                <i class="bi bi-person me-1"></i>
+                <a href="{% url 'autor_detalle' libro.autor.pk %}" class="text-decoration-none">
+                    {{ libro.autor.nombre }}
+                </a>
+            </p>
+            <p class="text-muted mb-1"><i class="bi bi-calendar3 me-1"></i>{{ libro.anio_publicacion }}</p>
+            <p class="text-muted small font-monospace">ISBN: {{ libro.isbn }}</p>
+            <hr>
+            {% if libro.cantidad_disponible > 0 %}
+                <span class="badge badge-disponible text-white rounded-pill fs-6 py-2">
+                    <i class="bi bi-check-circle me-1"></i>{{ libro.cantidad_disponible }} disponibles
+                </span>
+            {% else %}
+                <span class="badge badge-agotado text-white rounded-pill fs-6 py-2">
+                    <i class="bi bi-x-circle me-1"></i>Sin ejemplares
+                </span>
+            {% endif %}
+            {% if libro.cantidad_disponible > 0 %}
+            <a href="{% url 'prestamo_registrar' %}" class="btn btn-primary mt-3 w-100">
+                <i class="bi bi-bookmark-plus me-1"></i>Registrar préstamo
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <i class="bi bi-bookmark-check me-2"></i>Préstamos activos de este libro
+            </div>
+            <div class="card-body p-0">
+                {% if prestamos %}
+                <ul class="list-group list-group-flush">
+                    {% for prestamo in prestamos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-semibold">{{ prestamo.usuario_nombre }}</div>
+                            <div class="text-muted small">
+                                <i class="bi bi-calendar-event me-1"></i>Préstamo: {{ prestamo.fecha_prestamo }}
+                                &nbsp;|&nbsp;
+                                Devolver: {{ prestamo.fecha_devolucion }}
+                            </div>
+                        </div>
+                        <a href="{% url 'prestamo_devolver' prestamo.pk %}"
+                           class="btn btn-sm btn-outline-success"
+                           onclick="return confirm('¿Marcar como devuelto?')">
+                            <i class="bi bi-check2"></i> Devuelto
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-check-circle fs-3 text-success"></i>
+                    <p class="mt-2">No hay préstamos activos para este libro.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

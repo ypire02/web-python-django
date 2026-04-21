@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ autor.nombre }}{% endblock %}
+
+{% block contenido %}
+
+<div class="d-flex align-items-center mb-4">
+    <a href="{% url 'autores_lista' %}" class="btn btn-outline-secondary btn-sm me-3">
+        <i class="bi bi-arrow-left"></i>
+    </a>
+    <h2 class="fw-bold mb-0"><i class="bi bi-person me-2 text-secondary"></i>{{ autor.nombre }}</h2>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card text-center p-4">
+            <div class="mb-3">
+                <i class="bi bi-person-circle display-1 text-secondary opacity-50"></i>
+            </div>
+            <h4 class="fw-bold">{{ autor.nombre }}</h4>
+            <p class="text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>{{ autor.pais }}</p>
+            <p class="text-muted mb-1"><i class="bi bi-calendar3 me-1"></i>Nacido en {{ autor.anio_nacimiento }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-journals me-2"></i>Libros de este autor ({{ libros.count }})
+            </div>
+            <div class="card-body p-0">
+                {% if libros %}
+                <ul class="list-group list-group-flush">
+                    {% for libro in libros %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{% url 'libro_detalle' libro.pk %}" class="text-decoration-none fw-semibold">
+                                {{ libro.titulo }}
+                            </a>
+                            <div class="text-muted small">ISBN: {{ libro.isbn }} · {{ libro.anio_publicacion }}</div>
+                        </div>
+                        {% if libro.cantidad_disponible > 0 %}
+                            <span class="badge badge-disponible text-white rounded-pill">
+                                {{ libro.cantidad_disponible }} disponibles
+                            </span>
+                        {% else %}
+                            <span class="badge badge-agotado text-white rounded-pill">Agotado</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-inbox fs-3"></i>
+                    <p class="mt-2">Este autor no tiene libros registrados.</p>
+                    <a href="{% url 'libro_agregar' %}" class="btn btn-sm btn-primary">Agregar un libro</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

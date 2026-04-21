@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+
+<!-- Hero section -->
+<div class="hero text-center text-white py-5 mb-5 rounded-3"
+     style="background: linear-gradient(135deg, #1a1f36 0%, #2c3e50 100%); padding: 4rem 2rem !important;">
+    <i class="bi bi-book-half display-3 mb-3 d-block"></i>
+    <h1 class="display-5 fw-bold mb-3">Sistema de Gestión de Biblioteca</h1>
+    <p class="lead mb-4 text-white-50">
+        Administrá libros, autores y préstamos de manera sencilla y eficiente.
+    </p>
+    <a href="{% url 'libros_lista' %}" class="btn btn-light btn-lg px-4 me-2">
+        <i class="bi bi-journals me-2"></i>Ver catálogo
+    </a>
+    <a href="{% url 'libros_buscar' %}" class="btn btn-outline-light btn-lg px-4">
+        <i class="bi bi-search me-2"></i>Buscar un libro
+    </a>
+</div>
+
+<!-- Tarjetas de acceso rápido -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="mb-3">
+                <i class="bi bi-journals display-4 text-primary"></i>
+            </div>
+            <h4 class="fw-bold">Libros</h4>
+            <p class="text-muted">
+                Explorá el catálogo completo de libros disponibles en la biblioteca.
+            </p>
+            <div class="mt-auto pt-3">
+                <span class="badge bg-primary fs-6 mb-3">{{ total_libros }} en catálogo</span><br>
+                <a href="{% url 'libros_lista' %}" class="btn btn-primary w-100">Ver más</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="mb-3">
+                <i class="bi bi-people display-4 text-success"></i>
+            </div>
+            <h4 class="fw-bold">Autores</h4>
+            <p class="text-muted">
+                Conocé los autores registrados y los libros que escribieron.
+            </p>
+            <div class="mt-auto pt-3">
+                <span class="badge bg-success fs-6 mb-3">{{ total_autores }} registrados</span><br>
+                <a href="{% url 'autores_lista' %}" class="btn btn-success w-100">Ver más</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="mb-3">
+                <i class="bi bi-arrow-left-right display-4 text-danger"></i>
+            </div>
+            <h4 class="fw-bold">Préstamos</h4>
+            <p class="text-muted">
+                Gestioná los préstamos activos y registrá nuevas devoluciones.
+            </p>
+            <div class="mt-auto pt-3">
+                <span class="badge bg-danger fs-6 mb-3">{{ prestamos_activos }} activos</span><br>
+                <a href="{% url 'prestamos_lista' %}" class="btn btn-danger w-100">Ver más</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Últimos préstamos activos -->
+{% if prestamos_recientes %}
+<div class="card mb-4">
+    <div class="card-header" style="background-color: #1a1f36; color: white;">
+        <i class="bi bi-clock-history me-2"></i>Préstamos activos recientes
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Libro</th>
+                        <th>Fecha devolución</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prestamo in prestamos_recientes %}
+                    <tr>
+                        <td class="fw-semibold">{{ prestamo.usuario_nombre }}</td>
+                        <td class="text-muted">{{ prestamo.libro.titulo }}</td>
+                        <td class="text-muted small">{{ prestamo.fecha_devolucion }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-end bg-white">
+        <a href="{% url 'prestamos_lista' %}" class="btn btn-sm btn-outline-secondary">Ver todos los préstamos</a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
