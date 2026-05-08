@@ -39,7 +39,7 @@
                     <i class="bi bi-x-circle me-1"></i>Sin ejemplares
                 </span>
             {% endif %}
-            {% if libro.cantidad_disponible > 0 %}
+            {% if libro.cantidad_disponible > 0 and request.user.is_staff %}
             <a href="{% url 'prestamo_registrar' %}" class="btn btn-primary mt-3 w-100">
                 <i class="bi bi-bookmark-plus me-1"></i>Registrar préstamo
             </a>
@@ -74,11 +74,13 @@
                                 Devolver: {{ prestamo.fecha_devolucion }}
                             </div>
                         </div>
+                        {% if request.user.is_staff %}
                         <a href="{% url 'prestamo_devolver' prestamo.pk %}"
                            class="btn btn-sm btn-outline-success"
                            onclick="return confirm('¿Marcar como devuelto?')">
                             <i class="bi bi-check2"></i> Devuelto
                         </a>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
