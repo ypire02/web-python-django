@@ -150,9 +150,10 @@ web-python-django/
 
 ---
 
-## Tecnologías
+## Tecnologías y video presentación sistema
 
 - Python 3 + Django
 - Bootstrap 5 + Bootstrap Icons
 - SQLite (base de datos de desarrollo)
 - Pillow (manejo de imágenes)
+- https://drive.google.com/file/d/1o4UBsMcALKxr9KAvcSzHPNxlcJNuXWtG/view?usp=sharing 
