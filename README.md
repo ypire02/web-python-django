@@ -36,7 +36,7 @@ python manage.py createsuperuser
 ```
 > Sugerencia de credenciales para prueba:
 > - **Usuario:** `admin`
-> - **Email:** (puede dejarse vacío)
+> - **Email:** (puede dejar vacío)
 > - **Contraseña:** `admin1234`
 
 ### 6. Correr el servidor
@@ -50,13 +50,13 @@ Ingresar a: **http://127.0.0.1:8000**
 
 ## Cómo probar los distintos roles
 
-### 👁️ Como visitante (sin cuenta)
+### Como visitante (sin cuenta)
 - Ingresá a **http://127.0.0.1:8000** sin iniciar sesión
 - Podés ver la lista de libros, autores y préstamos
 - **No verás** los botones de Agregar / Editar / Eliminar
 - Si intentás ingresar a una URL protegida, el sistema te redirige al Login
 
-### 👤 Como usuario registrado (sin permisos de staff)
+### Como usuario registrado (sin permisos de staff)
 **Crear cuenta nueva:**
 1. Hacé clic en **Registrarse** en el navbar
 2. Completá usuario, email y contraseña
@@ -69,7 +69,7 @@ Ingresar a: **http://127.0.0.1:8000**
 
 **No puede:** agregar, editar ni eliminar libros/autores/préstamos
 
-### 🔐 Como staff / administrador
+### Como staff / administrador
 Usar las credenciales del superusuario creado en el paso 5 (`admin` / `admin1234`).
 
 **El staff puede hacer todo lo anterior más:**
@@ -77,7 +77,7 @@ Usar las credenciales del superusuario creado en el paso 5 (`admin` / `admin1234
 - Registrar préstamos y marcar devoluciones
 - Acceder al panel de administración en `/admin/`
 
-### 🚪 Logout
+### Logout
 Al cerrar sesión desde el menú del navbar, el sistema redirige automáticamente al **home**.
 
 ---
