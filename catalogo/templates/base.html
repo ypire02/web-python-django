@@ -42,18 +42,33 @@
         }
         .text-dark{ color: #774ba2 !important;}
         .text-white-50{color: rgb(255 255 255) !important;}
-        .bi-search{color: #000;}
-
+        .text-decoration-none {
+            color: #000  !important;
+        }
+        span.badge.badge-agotado.text-white.rounded-pill {
+        color: #fff !important;
+    }
+        .btn-outline-primary{background: #D8B4FE !important; border: none; }
         .badge-agotado{ background-color: #E0E0E0 !important; color: #757575 !important;}
         .btn-light{background-color: #fff;}
-        .badge{padding: .7rem !important;}
-        .badge-disponible { background-color: #000;}
-        .badge-agotado { background-color: #000;}
+        .badge{padding: .7rem !important; background-color: #774ba2 !important;}
+        .badge-disponible { background-color: #D8B4FE;}
+        .badge-agotado { background-color: #361961;}
         .table th { font-weight: 600; color: #555; }
         .btn-primary { background-color: #774ba2; border-color: #774ba2; }
-        .btn-primary:hover { background-color: #774ba2 ; border-color: #774ba2 ; }
+        .btn-primary:hover { background-color: #774ba2; border-color: #774ba2 ; }
+        .bg-danger{background-color: #774ba2 !important; }
+        .bg-primary{background-color: #774ba2 !important; }
+        .btn-dark {
+            background: #D8B4FE !important;
+            color: #4C1D95 !important;
+            border: none !important;
+        }
+        .bi-eye::before {
+            color: #000 !important;
+        }
         footer {
-            background-color: #774ba2 ;
+            background-color: #774ba2;
             color: #fff;
             padding: 1.2rem 0;
             margin-top: 4rem;
@@ -74,7 +89,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto gap-2">
+            <ul class="navbar-nav ms-auto gap-2 align-items-center">
                 <li class="nav-item">
                     <a class="nav-link {% if 'libros' in request.resolver_match.url_name %}active{% endif %}"
                        href="{% url 'libros_lista' %}">
@@ -93,11 +108,44 @@
                         <i class="bi bi-arrow-left-right me-1"></i>Préstamos
                     </a>
                 </li>
-                <li class="nav-item ms-2">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                       href="{% url 'about' %}">
+                        <i class="bi bi-person me-1"></i>About
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="btn btn-outline-light btn-sm" href="{% url 'libros_buscar' %}">
                         <i class="bi bi-search me-1"></i>Buscar
                     </a>
                 </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown ms-1">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>{{ request.user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'perfil' %}">
+                            <i class="bi bi-person me-2"></i>Mi perfil
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">
+                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+                        </a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item ms-1">
+                    <a class="btn btn-outline-light btn-sm" href="{% url 'signup' %}">
+                        <i class="bi bi-person-plus me-1"></i>Registrarse
+                    </a>
+                </li>
+                <li class="nav-item ms-1">
+                    <a class="btn btn-light btn-sm text-dark fw-semibold" href="{% url 'login' %}">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

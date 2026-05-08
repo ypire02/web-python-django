@@ -17,9 +17,12 @@ class Autor(models.Model):
 
 class Libro(models.Model):
     titulo = models.CharField(max_length=200)
-    isbn = models.CharField(max_length=13, unique=True)
+    isbn = models.CharField(max_length=13)
+    numero_catalogo = models.IntegerField(unique=True)
     anio_publicacion = models.IntegerField()
+    fecha_ingreso = models.DateField(auto_now_add=True)
     cantidad_disponible = models.IntegerField(default=1)
+    imagen = models.ImageField(upload_to='libros/', blank=True, null=True)
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE, related_name='libros')
 
     def __str__(self):

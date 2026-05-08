@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Iniciar sesión{% endblock %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card p-4">
+            <div class="text-center mb-4">
+                <i class="bi bi-person-circle display-4 text-secondary"></i>
+                <h4 class="fw-bold mt-2">Iniciar sesión</h4>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Usuario</label>
+                    <input type="text" name="username" class="form-control" placeholder="Tu nombre de usuario" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Contraseña</label>
+                    <input type="password" name="password" class="form-control" placeholder="Tu contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-dark w-100 mt-2">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
+                </button>
+            </form>
+            <hr>
+            <p class="text-center text-muted small mb-0">
+                ¿No tenés cuenta?
+                <a href="{% url 'signup' %}" class="text-decoration-none fw-semibold">Registrate</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

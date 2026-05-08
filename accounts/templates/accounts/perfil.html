@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Mi perfil{% endblock %}
+
+{% block contenido %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4 text-center">
+            {% if perfil.avatar %}
+                <img src="{{ perfil.avatar.url }}" alt="Avatar"
+                     class="rounded-circle mx-auto d-block mb-3"
+                     style="width: 120px; height: 120px; object-fit: cover;">
+            {% else %}
+                <i class="bi bi-person-circle display-1 text-secondary mb-3 d-block"></i>
+            {% endif %}
+
+            <h4 class="fw-bold mb-0">
+                {{ request.user.first_name }} {{ request.user.last_name }}
+            </h4>
+            <p class="text-muted mb-1">@{{ request.user.username }}</p>
+            <p class="text-muted small mb-3">
+                <i class="bi bi-envelope me-1"></i>{{ request.user.email }}
+            </p>
+
+            {% if perfil.biografia %}
+            <p class="text-muted border-top pt-3">{{ perfil.biografia }}</p>
+            {% endif %}
+
+            <div class="d-flex gap-2 justify-content-center mt-3">
+                <a href="{% url 'perfil_editar' %}" class="btn btn-dark">
+                    <i class="bi bi-pencil me-1"></i>Editar perfil
+                </a>
+                <a href="{% url 'cambiar_password' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-shield-lock me-1"></i>Cambiar contraseña
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
